@@ -1,0 +1,22 @@
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+dependencies
+{
+  compile project(':fox-security-core')
+  runtime 'mysql:mysql-connector-java:8.0.8-dmr'
+//  compile('org.springframework.session:spring-session-core')
+//  compile('org.springframework.boot:spring-boot-starter-security')
+//  compile('org.springframework.cloud:spring-cloud-starter-security')
+//  testCompile('org.springframework.security:spring-security-test')
+}
+
+
+//spring boot
+dependencyManagement {
+  //
+  imports { //
+    mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}" //
+  }//
+}

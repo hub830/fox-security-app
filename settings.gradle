@@ -1,0 +1,6 @@
+rootProject.name = 'fox-security'
+
+include 'fox-security-core'
+include 'fox-security-browser'
+include 'fox-security-app'
+include 'fox-security-demo'

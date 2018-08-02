@@ -1,0 +1,65 @@
+allprojects
+{ repositories
+  { mavenCentral() } }
+
+group = 'fox-security'
+version = '0.0.1-SNAPSHOT'
+
+subprojects
+{
+  buildscript
+  {
+    ext { springBootVersion = '2.0.3.RELEASE' }
+    repositories { mavenCentral() }
+    dependencies { classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") }
+  }
+
+  apply plugin: 'java'
+  apply plugin: 'eclipse'
+
+  sourceCompatibility = 10
+  targetCompatibility = 10
+
+  ext
+  {
+    springCloudVersion = 'Finchley.RELEASE'
+    env = System.getProperty("env")?:"dev"
+  }
+
+  sourceSets
+  {
+    main
+    {
+      //
+      resources {
+        srcDirs = ["src/main/resources/public", "src/main/resources/$env"]
+      }
+    }
+    test {
+      java { //
+        srcDir 'src/test/java'//
+      } //
+    }
+  }
+
+  task wrapper(type: Wrapper) { gradleVersion = '4.0.2' }
+  [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
+  dependencies {
+    compile ('org.projectlombok:lombok:1.16.18')
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.7.0'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.7.0'
+    compile group: 'joda-time', name: 'joda-time', version: '2.9.9'
+    compile group: 'com.google.guava', name: 'guava', version: '23.5-jre'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.6'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-collections4
+    compile group: 'org.apache.commons', name: 'commons-collections4', version: '4.1'
+    // https://mvnrepository.com/artifact/commons-beanutils/commons-beanutils
+    compile group: 'commons-beanutils', name: 'commons-beanutils', version: '1.9.3'
+    // https://mvnrepository.com/artifact/junit/junit
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile 'com.alibaba:fastjson:1.2.47'
+  }
+
+}

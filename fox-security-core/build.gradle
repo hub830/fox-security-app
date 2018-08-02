@@ -1,0 +1,39 @@
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+dependencies
+{
+  compile('org.springframework.boot:spring-boot-starter-web')
+  compile('org.springframework.boot:spring-boot-starter-security')
+  compile('org.springframework.session:spring-session-core')
+  compile('org.springframework.boot:spring-boot-starter-data-redis')
+  compile('org.springframework.boot:spring-boot-starter-data-jpa')
+  compile('org.springframework.boot:spring-boot-starter-validation')
+  compile 'org.springframework.social:spring-social-core:1.1.6.RELEASE'
+  compile 'org.springframework.social:spring-social-config:1.1.6.RELEASE'
+  compile 'org.springframework.social:spring-social-security:1.1.6.RELEASE'
+  compile 'org.springframework.social:spring-social-web:1.1.6.RELEASE'
+  testCompile('com.h2database:h2')
+  runtime 'mysql:mysql-connector-java:8.0.8-dmr'
+  compileOnly('org.projectlombok:lombok')
+  testCompile('org.springframework.boot:spring-boot-starter-test')
+  // https://mvnrepository.com/artifact/javax.xml.bind/jaxb-api
+  compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.0'
+  compile group: 'com.sun.xml.bind', name: 'jaxb-impl', version: '2.3.0'
+  compile group: 'com.sun.xml.bind', name: 'jaxb-core', version: '2.3.0'
+  compile group: 'javax.activation', name: 'activation', version: '1.1.1'
+  // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+  compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+
+
+}
+
+
+//spring boot
+dependencyManagement {
+  //
+  imports { //
+    mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}" //
+  }//
+}
