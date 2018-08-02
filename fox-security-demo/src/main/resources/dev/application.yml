@@ -10,5 +10,5 @@ spring:
     store-type: none
 fox:
   security:
-    browser:
+#    browser:
 #      loginPage: /demo-signIn.html

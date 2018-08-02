@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @ConfigurationProperties(prefix="fox.security")
 public class SecurityProperties {
-  BrowserProperties browser = new BrowserProperties();
+  private BrowserProperties browser = new BrowserProperties();
 }
