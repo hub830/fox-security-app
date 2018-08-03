@@ -10,5 +10,6 @@ spring:
     store-type: none
 fox:
   security:
-#    browser:
+    browser:
+      loginType: REDIRECT
 #      loginPage: /demo-signIn.html
