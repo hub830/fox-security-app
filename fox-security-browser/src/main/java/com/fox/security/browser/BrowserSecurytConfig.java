@@ -7,7 +7,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import com.fox.core.properties.SecurityProperties;
+import com.fox.core.validate.code.ValidateCodeFilter;
 import com.fox.security.browser.authentication.FoxAuthenticationFailHandler;
 import com.fox.security.browser.authentication.FoxAuthenticationSuccessHandler;
 
@@ -16,7 +18,7 @@ public class BrowserSecurytConfig extends WebSecurityConfigurerAdapter {
 
   @Autowired
   private SecurityProperties securityProperties;
-  
+
   @Autowired
   private FoxAuthenticationSuccessHandler foxAuthenticationSuccessHandler;
 
@@ -25,7 +27,10 @@ public class BrowserSecurytConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
+    ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
+    validateCodeFilter.setAuthenticationFailureHandler(foxAuthenticationFailHandler);
     http//
+        .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)//
         // .httpBasic()//
         .formLogin()//
         .loginPage("/authentication/require")//
@@ -34,11 +39,13 @@ public class BrowserSecurytConfig extends WebSecurityConfigurerAdapter {
         .failureHandler(foxAuthenticationFailHandler)//
         .and()//
         .authorizeRequests()//
-//        .antMatchers("/fox-signin.html")//
+        // .antMatchers("/fox-signin.html")//
         .antMatchers(//
-            "/authentication/require",//
-            "/error",
-            securityProperties.getBrowser().getLoginPage())//
+            "/authentication/require", //
+            "/error", //
+            "/code/image", //
+            securityProperties.getBrowser().getLoginPage()//
+        )//
         .permitAll()//
         .anyRequest()//
         .authenticated()//

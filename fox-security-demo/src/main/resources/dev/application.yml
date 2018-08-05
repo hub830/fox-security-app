@@ -11,5 +11,5 @@ spring:
 fox:
   security:
     browser:
-      loginType: REDIRECT
+      loginType: JSON
 #      loginPage: /demo-signIn.html

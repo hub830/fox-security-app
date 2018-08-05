@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSON;
 import com.fox.core.properties.LoginType;
 import com.fox.core.properties.SecurityProperties;
+import com.fox.security.browser.support.SimpleResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -28,7 +29,7 @@ public class FoxAuthenticationFailHandler extends SimpleUrlAuthenticationFailure
     if (LoginType.JSON == securityProperties.getBrowser().getLoginType()) {
       response.setContentType("application/json;charset=UTF-8");
       response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
-      response.getWriter().write(JSON.toJSONString(exception));
+      response.getWriter().write(JSON.toJSONString(new SimpleResponse(exception.getMessage())));
     } else {
       super.onAuthenticationFailure(request, response, exception);
     }
