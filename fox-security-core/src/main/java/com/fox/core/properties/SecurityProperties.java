@@ -4,7 +4,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import lombok.Data;
 
 @Data
-@ConfigurationProperties(prefix="fox.security")
+@ConfigurationProperties(prefix = "fox.security")
 public class SecurityProperties {
+  
   private BrowserProperties browser = new BrowserProperties();
+  
+  private ValidateCodeProperties code = new ValidateCodeProperties();
 }

@@ -7,5 +7,4 @@ import com.fox.core.properties.SecurityProperties;
 @Configuration
 @EnableConfigurationProperties(SecurityProperties.class)
 public class SecurityCoreConfig {
-
 }
