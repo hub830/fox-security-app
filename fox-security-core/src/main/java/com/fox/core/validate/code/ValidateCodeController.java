@@ -1,31 +1,26 @@
 package com.fox.core.validate.code;
 
-import java.io.IOException;
-import javax.imageio.ImageIO;
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.connect.web.HttpSessionSessionStrategy;
-import org.springframework.social.connect.web.SessionStrategy;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.ServletWebRequest;
 
 @RestController
 public class ValidateCodeController {
-  public static final String SESSION_KEY = "SESSION_KEY_IMAGE_CODE";
-  private SessionStrategy sessionStrategy = new HttpSessionSessionStrategy();
-
   @Autowired
-  private ValidateCodeGenerator imageCodeGenerator;
+  private Map<String,ValidateCodeProcessor> validateCodeProcessors;
+  
+  
 
-  @GetMapping("/code/image")
-  public void createCode(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
-    ServletWebRequest webRequest = new ServletWebRequest(request);
-    ImageCode imageCode = imageCodeGenerator.generate(webRequest);
-    sessionStrategy.setAttribute(new ServletWebRequest(request), SESSION_KEY, imageCode);
-    ImageIO.write(imageCode.getImage(), "JPEG", response.getOutputStream());
+  @GetMapping("/code/{type}")
+  public void createCode(@PathVariable String type, HttpServletRequest request, HttpServletResponse response)
+      throws Exception {
+    validateCodeProcessors.get(type+"CodeProcessor").create(new ServletWebRequest(request, response));
   }
+
 
 }
