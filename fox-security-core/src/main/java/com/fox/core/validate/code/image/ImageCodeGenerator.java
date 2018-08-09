@@ -1,4 +1,4 @@
-package com.fox.core.validate.code;
+package com.fox.core.validate.code.image;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -8,6 +8,7 @@ import java.util.Random;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 import com.fox.core.properties.SecurityProperties;
+import com.fox.core.validate.code.ValidateCodeGenerator;
 import lombok.Setter;
 
 public class ImageCodeGenerator implements ValidateCodeGenerator {

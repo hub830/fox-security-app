@@ -9,13 +9,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import com.fox.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
 import com.fox.core.properties.SecurityProperties;
+import com.fox.core.validate.code.SmsCodeFilter;
 import com.fox.core.validate.code.ValidateCodeFilter;
-import com.fox.security.browser.authentication.FoxAuthenticationFailHandler;
-import com.fox.security.browser.authentication.FoxAuthenticationSuccessHandler;
 
 @Configuration
 public class BrowserSecurytConfig extends WebSecurityConfigurerAdapter {
@@ -24,14 +26,17 @@ public class BrowserSecurytConfig extends WebSecurityConfigurerAdapter {
   private SecurityProperties securityProperties;
 
   @Autowired
-  private FoxAuthenticationSuccessHandler foxAuthenticationSuccessHandler;
+  private AuthenticationSuccessHandler foxAuthenticationSuccessHandler;
 
   @Autowired
-  private FoxAuthenticationFailHandler foxAuthenticationFailHandler;
+  private AuthenticationFailureHandler foxAuthenticationFailureHandler;
 
   @Autowired
   private DataSource dataSource;
-
+  
+  @Autowired
+  SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+  
   @Autowired
   private UserDetailsService userDetailsService;
 
@@ -39,25 +44,31 @@ public class BrowserSecurytConfig extends WebSecurityConfigurerAdapter {
   public PersistentTokenRepository persistentTokenRepository() {
     JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
     tokenRepository.setDataSource(dataSource);
-//     tokenRepository.setCreateTableOnStartup(true);
+    // tokenRepository.setCreateTableOnStartup(true);
     return tokenRepository;
   }
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
-    validateCodeFilter.setAuthenticationFailureHandler(foxAuthenticationFailHandler);
+    validateCodeFilter.setAuthenticationFailureHandler(foxAuthenticationFailureHandler);
     validateCodeFilter.setSecurityProperties(securityProperties);
     validateCodeFilter.afterPropertiesSet();
 
+    SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
+    smsCodeFilter.setAuthenticationFailureHandler(foxAuthenticationFailureHandler);
+    smsCodeFilter.setSecurityProperties(securityProperties);
+    smsCodeFilter.afterPropertiesSet();
+
     http//
         .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)//
+        .addFilterBefore(smsCodeFilter, UsernamePasswordAuthenticationFilter.class)//
         // .httpBasic()//
         .formLogin()//
         .loginPage("/authentication/require")//
         .loginProcessingUrl("/authentication/form")//
         .successHandler(foxAuthenticationSuccessHandler)//
-        .failureHandler(foxAuthenticationFailHandler)//
+        .failureHandler(foxAuthenticationFailureHandler)//
         .and()//
         .rememberMe()//
         .tokenRepository(persistentTokenRepository())//
@@ -76,6 +87,7 @@ public class BrowserSecurytConfig extends WebSecurityConfigurerAdapter {
         .anyRequest()//
         .authenticated()//
         .and().csrf().disable()//
+        .apply(smsCodeAuthenticationSecurityConfig)
     ;
   }
 

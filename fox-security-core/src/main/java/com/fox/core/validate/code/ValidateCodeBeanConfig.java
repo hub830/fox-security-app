@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import com.fox.core.properties.SecurityProperties;
+import com.fox.core.validate.code.image.ImageCodeGenerator;
 import com.fox.core.validate.code.sms.DefaultSmsCodeSender;
 import com.fox.core.validate.code.sms.SmsCodeSender;
 

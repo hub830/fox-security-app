@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
 import com.fox.core.properties.SecurityProperties;
-import com.fox.core.validate.code.ImageCode;
 import com.fox.core.validate.code.ValidateCodeGenerator;
+import com.fox.core.validate.code.image.ImageCode;
 
 @Component("imageCodeGenerator")
 public class DemoImageCodeGenerator implements ValidateCodeGenerator {

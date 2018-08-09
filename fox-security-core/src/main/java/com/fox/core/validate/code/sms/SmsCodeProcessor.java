@@ -1,10 +1,11 @@
-package com.fox.core.validate.code;
+package com.fox.core.validate.code.sms;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.ServletRequestUtils;
 import org.springframework.web.context.request.ServletWebRequest;
-import com.fox.core.validate.code.sms.SmsCodeSender;
+import com.fox.core.validate.code.ValidateCode;
+import com.fox.core.validate.code.impl.AbstractValidateCodeProcessor;
 
 @Component
 public class SmsCodeProcessor extends AbstractValidateCodeProcessor<ValidateCode> {

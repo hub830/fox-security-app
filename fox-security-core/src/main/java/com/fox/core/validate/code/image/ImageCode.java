@@ -1,7 +1,8 @@
-package com.fox.core.validate.code;
+package com.fox.core.validate.code.image;
 
 import java.awt.image.BufferedImage;
 import java.time.LocalDateTime;
+import com.fox.core.validate.code.ValidateCode;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
