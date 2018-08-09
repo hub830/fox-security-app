@@ -5,38 +5,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import com.fox.core.authentication.AbstractChannelSecurityConfig;
 import com.fox.core.authentication.mobile.SmsCodeAuthenticationSecurityConfig;
+import com.fox.core.properties.SecurityConstants;
 import com.fox.core.properties.SecurityProperties;
-import com.fox.core.validate.code.SmsCodeFilter;
-import com.fox.core.validate.code.ValidateCodeFilter;
+import com.fox.core.validate.code.ValidateCodeSecurityConfig;
 
 @Configuration
-public class BrowserSecurytConfig extends WebSecurityConfigurerAdapter {
+public class BrowserSecurytConfig extends AbstractChannelSecurityConfig {
+
 
   @Autowired
   private SecurityProperties securityProperties;
 
   @Autowired
-  private AuthenticationSuccessHandler foxAuthenticationSuccessHandler;
-
-  @Autowired
-  private AuthenticationFailureHandler foxAuthenticationFailureHandler;
-
-  @Autowired
   private DataSource dataSource;
-  
+
   @Autowired
-  SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
-  
+  private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
+  @Autowired
+  private ValidateCodeSecurityConfig validateCodeSecurityConfig;
+
   @Autowired
   private UserDetailsService userDetailsService;
 
@@ -50,25 +45,11 @@ public class BrowserSecurytConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
-    ValidateCodeFilter validateCodeFilter = new ValidateCodeFilter();
-    validateCodeFilter.setAuthenticationFailureHandler(foxAuthenticationFailureHandler);
-    validateCodeFilter.setSecurityProperties(securityProperties);
-    validateCodeFilter.afterPropertiesSet();
-
-    SmsCodeFilter smsCodeFilter = new SmsCodeFilter();
-    smsCodeFilter.setAuthenticationFailureHandler(foxAuthenticationFailureHandler);
-    smsCodeFilter.setSecurityProperties(securityProperties);
-    smsCodeFilter.afterPropertiesSet();
-
+    applyPasswordAuthenticationConfig(http);
     http//
-        .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)//
-        .addFilterBefore(smsCodeFilter, UsernamePasswordAuthenticationFilter.class)//
-        // .httpBasic()//
-        .formLogin()//
-        .loginPage("/authentication/require")//
-        .loginProcessingUrl("/authentication/form")//
-        .successHandler(foxAuthenticationSuccessHandler)//
-        .failureHandler(foxAuthenticationFailureHandler)//
+        .apply(validateCodeSecurityConfig)//
+        .and()//
+        .apply(smsCodeAuthenticationSecurityConfig)//
         .and()//
         .rememberMe()//
         .tokenRepository(persistentTokenRepository())//
@@ -76,18 +57,18 @@ public class BrowserSecurytConfig extends WebSecurityConfigurerAdapter {
         .userDetailsService(userDetailsService)//
         .and()//
         .authorizeRequests()//
-        // .antMatchers("/fox-signin.html")//
         .antMatchers(//
-            "/authentication/require", //
-            "/error", //
-            "/code/*", //
-            securityProperties.getBrowser().getLoginPage()//
+            SecurityConstants.DEFAULT_UNAUTHENTICATION_URL, //
+            SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, //
+            securityProperties.getBrowser().getLoginPage(), //
+            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*"//
+            , "/code/*"//
         )//
         .permitAll()//
         .anyRequest()//
         .authenticated()//
-        .and().csrf().disable()//
-        .apply(smsCodeAuthenticationSecurityConfig)
+        .and()//
+        .csrf().disable()//
     ;
   }
 
