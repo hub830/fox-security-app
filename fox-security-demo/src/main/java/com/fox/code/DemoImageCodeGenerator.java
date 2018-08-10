@@ -13,7 +13,7 @@ import com.fox.core.properties.SecurityProperties;
 import com.fox.core.validate.code.ValidateCodeGenerator;
 import com.fox.core.validate.code.image.ImageCode;
 
-@Component("imageCodeGenerator")
+@Component("imageValidateCodeGenerator")
 public class DemoImageCodeGenerator implements ValidateCodeGenerator {
 
 
