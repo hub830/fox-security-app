@@ -8,7 +8,7 @@ import com.fox.core.properties.SecurityProperties;
 import com.fox.core.validate.code.ValidateCode;
 import com.fox.core.validate.code.ValidateCodeGenerator;
 
-@Component("smsCodeGenerator")
+@Component("smsValidateCodeGenerator")
 public class SmsCodeGenerator implements ValidateCodeGenerator {
 
   @Autowired

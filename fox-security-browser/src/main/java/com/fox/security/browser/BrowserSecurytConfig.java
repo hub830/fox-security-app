@@ -62,7 +62,7 @@ public class BrowserSecurytConfig extends AbstractChannelSecurityConfig {
             SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, //
             securityProperties.getBrowser().getLoginPage(), //
             SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*"//
-            , "/code/*"//
+            , "/error"//
         )//
         .permitAll()//
         .anyRequest()//

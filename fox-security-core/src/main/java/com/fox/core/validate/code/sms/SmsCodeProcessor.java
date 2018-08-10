@@ -7,7 +7,7 @@ import org.springframework.web.context.request.ServletWebRequest;
 import com.fox.core.validate.code.ValidateCode;
 import com.fox.core.validate.code.impl.AbstractValidateCodeProcessor;
 
-@Component
+@Component("smsValidateCodeProcessor")
 public class SmsCodeProcessor extends AbstractValidateCodeProcessor<ValidateCode> {
 
   @Autowired
