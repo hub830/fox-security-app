@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.fox.core.properties.SecurityProperties;
-import com.fox.security.browser.support.SimpleResponse;
+import com.fox.core.support.SimpleResponse;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -1,4 +1,4 @@
-package com.fox.security.browser.authentication;
+package com.fox.security.app.authentication;
 
 import java.io.IOException;
 import javax.servlet.ServletException;

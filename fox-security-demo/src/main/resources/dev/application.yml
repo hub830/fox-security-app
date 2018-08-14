@@ -20,3 +20,8 @@ fox:
 #        height: 23
 #        expireIn: 60
 #        url: /user,/user/*
+security:
+  oauth2:
+    client:
+      client-id: fox
+      client-secret: foxsecret

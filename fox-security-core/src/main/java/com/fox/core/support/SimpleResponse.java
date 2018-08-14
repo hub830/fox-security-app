@@ -1,4 +1,4 @@
-package com.fox.security.browser.support;
+package com.fox.core.support;
 
 import lombok.Data;
 

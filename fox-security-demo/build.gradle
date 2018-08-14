@@ -4,7 +4,8 @@ apply plugin: 'io.spring.dependency-management'
 
 dependencies
 {
-  compile project(':fox-security-browser')
+//  compile project(':fox-security-browser')
+  compile project(':fox-security-app')
   compile("org.springframework.boot:spring-boot-devtools")
   testCompile('org.springframework.boot:spring-boot-starter-test')
 //  testCompile('org.springframework.security:spring-security-test')

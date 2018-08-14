@@ -1,4 +1,4 @@
-package com.fox.security.browser;
+package com.fox.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;

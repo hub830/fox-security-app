@@ -72,8 +72,4 @@ public class BrowserSecurytConfig extends AbstractChannelSecurityConfig {
     ;
   }
 
-  @Bean
-  public PasswordEncoder passwordEncoder() {
-    return new BCryptPasswordEncoder();
-  }
 }
