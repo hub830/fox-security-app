@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import com.fox.core.properties.SecurityConstants;
 import com.fox.core.properties.SecurityProperties;
 
-@Configuration
+//@Configuration
 public class AppSecurytConfig extends WebSecurityConfigurerAdapter {
 
 

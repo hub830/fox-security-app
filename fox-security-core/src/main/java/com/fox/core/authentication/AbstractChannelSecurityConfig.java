@@ -18,7 +18,8 @@ public class AbstractChannelSecurityConfig extends WebSecurityConfigurerAdapter 
   private AuthenticationFailureHandler foxAuthenticationFailureHandler;
 
   protected void applyPasswordAuthenticationConfig(HttpSecurity http) throws Exception {
-    http.formLogin().loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)//
+    http.formLogin()//
+        .loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)//
         .loginProcessingUrl(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM)//
         .successHandler(foxAuthenticationSuccessHandler)//
         .failureHandler(foxAuthenticationFailureHandler)//

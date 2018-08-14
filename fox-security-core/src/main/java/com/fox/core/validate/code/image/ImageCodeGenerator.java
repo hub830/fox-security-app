@@ -49,6 +49,7 @@ public class ImageCodeGenerator implements ValidateCodeGenerator {
 
     g.dispose();
 
+    System.out.println("生成的图形验证码为：" + sRand);
     return new ImageCode(image, sRand, securityProperties.getCode().getImage().getExpireIn());
   }
 
