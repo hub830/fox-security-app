@@ -8,6 +8,9 @@ spring:
     generate-ddl: true
   session:
     store-type: none
+  redis:
+    database: 5 
+    host: 192.168.1.10
 fox:
   security:
     browser:

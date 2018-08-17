@@ -8,42 +8,58 @@ package com.fox.core.properties;
  *
  */
 public interface SecurityConstants {
-
-  /**
-   * é»˜è®¤çš„å¤„ç†éªŒè¯ç çš„urlå‰ç¼€
-   */
-  public static final String DEFAULT_VALIDATE_CODE_URL_PREFIX = "/code";
-  /**
-   * å½“è¯·æ±‚éœ€è¦èº«ä»½è®¤è¯æ—¶ï¼Œé»˜è®¤è·³è½¬çš„url
-   * 
-   * @see SecurityController
-   */
-  public static final String DEFAULT_UNAUTHENTICATION_URL = "/authentication/require";
-  /**
-   * é»˜è®¤çš„ç”¨æˆ·åå¯†ç ç™»å½•è¯·æ±‚å¤„ç†url
-   */
-  public static final String DEFAULT_LOGIN_PROCESSING_URL_FORM = "/authentication/form";
-  /**
-   * é»˜è®¤çš„æ‰‹æœºéªŒè¯ç ç™»å½•è¯·æ±‚å¤„ç†url
-   */
-  public static final String DEFAULT_LOGIN_PROCESSING_URL_MOBILE = "/authentication/mobile";
-  /**
-   * é»˜è®¤ç™»å½•é¡µé¢
-   * 
-   * @see SecurityController
-   */
-  public static final String DEFAULT_LOGIN_PAGE_URL = "/imooc-signIn.html";
-  /**
-   * éªŒè¯å›¾ç‰‡éªŒè¯ç æ—¶ï¼Œhttpè¯·æ±‚ä¸­é»˜è®¤çš„æºå¸¦å›¾ç‰‡éªŒè¯ç ä¿¡æ¯çš„å‚æ•°çš„åç§°
-   */
-  public static final String DEFAULT_PARAMETER_NAME_CODE_IMAGE = "imageCode";
-  /**
-   * éªŒè¯çŸ­ä¿¡éªŒè¯ç æ—¶ï¼Œhttpè¯·æ±‚ä¸­é»˜è®¤çš„æºå¸¦çŸ­ä¿¡éªŒè¯ç ä¿¡æ¯çš„å‚æ•°çš„åç§°
-   */
-  public static final String DEFAULT_PARAMETER_NAME_CODE_SMS = "smsCode";
-  /**
-   * å‘é€çŸ­ä¿¡éªŒè¯ç  æˆ– éªŒè¯çŸ­ä¿¡éªŒè¯ç æ—¶ï¼Œä¼ é€’æ‰‹æœºå·çš„å‚æ•°çš„åç§°
-   */
-  public static final String DEFAULT_PARAMETER_NAME_MOBILE = "mobile";
+	
+	/**
+	 * Ä¬ÈÏµÄ´¦ÀíÑéÖ¤ÂëµÄurlÇ°×º
+	 */
+	public static final String DEFAULT_VALIDATE_CODE_URL_PREFIX = "/code";
+	/**
+	 * µ±ÇëÇóĞèÒªÉí·İÈÏÖ¤Ê±£¬Ä¬ÈÏÌø×ªµÄurl
+	 * 
+	 * @see SecurityController
+	 */
+	public static final String DEFAULT_UNAUTHENTICATION_URL = "/authentication/require";
+	/**
+	 * Ä¬ÈÏµÄÓÃ»§ÃûÃÜÂëµÇÂ¼ÇëÇó´¦Àíurl
+	 */
+	public static final String DEFAULT_LOGIN_PROCESSING_URL_FORM = "/authentication/form";
+	/**
+	 * Ä¬ÈÏµÄÊÖ»úÑéÖ¤ÂëµÇÂ¼ÇëÇó´¦Àíurl
+	 */
+	public static final String DEFAULT_LOGIN_PROCESSING_URL_MOBILE = "/authentication/mobile";
+	/**
+	 * Ä¬ÈÏµÄOPENIDµÇÂ¼ÇëÇó´¦Àíurl
+	 */
+	public static final String DEFAULT_LOGIN_PROCESSING_URL_OPENID = "/authentication/openid";
+	/**
+	 * Ä¬ÈÏµÇÂ¼Ò³Ãæ
+	 * 
+	 * @see SecurityController
+	 */
+	public static final String DEFAULT_LOGIN_PAGE_URL = "/fox-signIn.html";
+	/**
+	 * ÑéÖ¤Í¼Æ¬ÑéÖ¤ÂëÊ±£¬httpÇëÇóÖĞÄ¬ÈÏµÄĞ¯´øÍ¼Æ¬ÑéÖ¤ÂëĞÅÏ¢µÄ²ÎÊıµÄÃû³Æ
+	 */
+	public static final String DEFAULT_PARAMETER_NAME_CODE_IMAGE = "imageCode";
+	/**
+	 * ÑéÖ¤¶ÌĞÅÑéÖ¤ÂëÊ±£¬httpÇëÇóÖĞÄ¬ÈÏµÄĞ¯´ø¶ÌĞÅÑéÖ¤ÂëĞÅÏ¢µÄ²ÎÊıµÄÃû³Æ
+	 */
+	public static final String DEFAULT_PARAMETER_NAME_CODE_SMS = "smsCode";
+	/**
+	 * ·¢ËÍ¶ÌĞÅÑéÖ¤Âë »ò ÑéÖ¤¶ÌĞÅÑéÖ¤ÂëÊ±£¬´«µİÊÖ»úºÅµÄ²ÎÊıµÄÃû³Æ
+	 */
+	public static final String DEFAULT_PARAMETER_NAME_MOBILE = "mobile";
+	/**
+	 * openid²ÎÊıÃû
+	 */
+	public static final String DEFAULT_PARAMETER_NAME_OPENID = "openId";
+	/**
+	 * providerId²ÎÊıÃû
+	 */
+	public static final String DEFAULT_PARAMETER_NAME_PROVIDERID = "providerId";
+	/**
+	 * sessionÊ§Ğ§Ä¬ÈÏµÄÌø×ªµØÖ·
+	 */
+	public static final String DEFAULT_SESSION_INVALID_URL = "/fox-session-invalid.html";
 
 }

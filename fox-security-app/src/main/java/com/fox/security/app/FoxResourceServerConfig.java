@@ -61,8 +61,8 @@ public class FoxResourceServerConfig extends ResourceServerConfigurerAdapter {
         .failureHandler(foxAuthenticationFailureHandler)//
     ;
     http//
-//        .apply(validateCodeSecurityConfig)//
-//        .and()//
+        .apply(validateCodeSecurityConfig)//
+        .and()//
         .apply(smsCodeAuthenticationSecurityConfig)//
         .and()//
         .rememberMe()//
