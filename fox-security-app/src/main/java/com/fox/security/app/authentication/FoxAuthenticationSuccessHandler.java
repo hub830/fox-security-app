@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.UnapprovedClientAuthenticationException;
 import org.springframework.security.oauth2.provider.ClientDetails;
@@ -30,6 +31,9 @@ import lombok.extern.slf4j.Slf4j;
 public class FoxAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
   @Autowired
   private SecurityProperties securityProperties;
+
+  @Autowired
+  private BCryptPasswordEncoder passwordEncoder;
   
   @Autowired
   private ClientDetailsService clientDetailsService;
@@ -60,7 +64,8 @@ public class FoxAuthenticationSuccessHandler extends SavedRequestAwareAuthentica
       {
         throw new UnapprovedClientAuthenticationException("clientId对应的配置就算不存在："+clientId);
       }
-      if(!StringUtils.equals(clientDetails.getClientSecret(),clientSecret))
+      clientSecret = passwordEncoder.encode(clientSecret);
+      if( passwordEncoder.matches(clientSecret, clientDetails.getClientSecret()))
       {
         throw new UnapprovedClientAuthenticationException("clientSecret不匹配："+clientId);
       }

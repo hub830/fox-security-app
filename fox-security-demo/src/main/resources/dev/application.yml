@@ -15,6 +15,7 @@ fox:
   security:
     browser:
       loginType: JSON
+      signOutUrl: /demo-logout.html
 #      loginPage: /demo-signIn.html
 #    code:
 #      image:
@@ -28,3 +29,4 @@ security:
     client:
       client-id: fox
       client-secret: foxsecret
+

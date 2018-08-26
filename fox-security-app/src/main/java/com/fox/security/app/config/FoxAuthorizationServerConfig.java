@@ -30,10 +30,12 @@ public class FoxAuthorizationServerConfig extends AuthorizationServerConfigurerA
 
   @Override
   public void configure(final ClientDetailsServiceConfigurer clients) throws Exception {
+    String secret = passwordEncoder.encode("secret");
     clients//
         .inMemory()//
         .withClient("client")//
         .secret(passwordEncoder.encode("secret"))//
+//        .secret("secret")//
         .authorizedGrantTypes("password", "refresh_token")//
         .scopes("read", "write")//
     ;
