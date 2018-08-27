@@ -16,54 +16,55 @@ import com.fox.core.validate.code.ValidateCodeSecurityConfig;
 @EnableResourceServer
 public class FoxResourceServerConfig extends ResourceServerConfigurerAdapter {
 
-  @Autowired
-  protected AuthenticationSuccessHandler foxAuthenticationSuccessHandler;
+	@Autowired
+	protected AuthenticationSuccessHandler foxAuthenticationSuccessHandler;
 
-  @Autowired
-  protected AuthenticationFailureHandler foxAuthenticationFailureHandler;
+	@Autowired
+	protected AuthenticationFailureHandler foxAuthenticationFailureHandler;
 
-  @Autowired
-  private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+	@Autowired
+	private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
 
-  @Autowired
-  private ValidateCodeSecurityConfig validateCodeSecurityConfig;
+	@Autowired
+	private ValidateCodeSecurityConfig validateCodeSecurityConfig;
 
+	@Autowired
+	private SecurityProperties securityProperties;
 
-  @Autowired
-  private SecurityProperties securityProperties;
+	@Override
+	public void configure(HttpSecurity http) throws Exception {
 
-  @Override
-  public void configure(HttpSecurity http) throws Exception {
+		http//
+				.formLogin()//
+				.loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)//
+				.loginProcessingUrl(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM)//
+				.successHandler(foxAuthenticationSuccessHandler)//
+				.failureHandler(foxAuthenticationFailureHandler);
 
-    http//
-        .formLogin()//
-        .loginPage(SecurityConstants.DEFAULT_UNAUTHENTICATION_URL)//
-        .loginProcessingUrl(SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_FORM)//
-        .successHandler(foxAuthenticationSuccessHandler)//
-        .failureHandler(foxAuthenticationFailureHandler);
-
-    http// .apply(validateCodeSecurityConfig)
-        // .and()
-        .apply(smsCodeAuthenticationSecurityConfig)//
-        .and()//
-        // .apply(imoocSocialSecurityConfig)//
-        // .and()//
-        .authorizeRequests()//
-        .antMatchers(//
-            SecurityConstants.DEFAULT_UNAUTHENTICATION_URL, //
-            SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, //
-            securityProperties.getBrowser().getLoginPage(), //
-            SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*", //
-            securityProperties.getBrowser().getSignUpUrl(), //
-            securityProperties.getBrowser().getSession().getSessionInvalidUrl(), //
-            securityProperties.getBrowser().getSignOutUrl(), "/user/regist")//
-        .permitAll()//
-        .anyRequest()//
-        .authenticated()//
-        .and().csrf().disable();//
-  }
-  /*
-   * @Override public void configure(final HttpSecurity http) throws Exception { http// .csrf()//
-   * .disable()// .authorizeRequests()// .anyRequest()// .authenticated(); }
-   */
+		http //
+				.apply(validateCodeSecurityConfig)//
+				.and()//
+				.apply(smsCodeAuthenticationSecurityConfig)//
+				.and()//
+				// .apply(imoocSocialSecurityConfig)//
+				// .and()//
+				.authorizeRequests()//
+				.antMatchers(//
+						SecurityConstants.DEFAULT_UNAUTHENTICATION_URL, //
+						SecurityConstants.DEFAULT_LOGIN_PROCESSING_URL_MOBILE, //
+						securityProperties.getBrowser().getLoginPage(), //
+						SecurityConstants.DEFAULT_VALIDATE_CODE_URL_PREFIX + "/*", //
+						securityProperties.getBrowser().getSignUpUrl(), //
+						securityProperties.getBrowser().getSession().getSessionInvalidUrl(), //
+						securityProperties.getBrowser().getSignOutUrl(), "/user/regist")//
+				.permitAll()//
+				.anyRequest()//
+				.authenticated()//
+				.and().csrf().disable();//
+	}
+	/*
+	 * @Override public void configure(final HttpSecurity http) throws Exception {
+	 * http// .csrf()// .disable()// .authorizeRequests()// .anyRequest()//
+	 * .authenticated(); }
+	 */
 }
